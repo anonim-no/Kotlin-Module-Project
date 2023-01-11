@@ -1,27 +1,50 @@
 import kotlin.collections.ArrayList
 
-class Archive(val title: String, val notes: ArrayList<Note>): MenuItem {
+class Archive(private val title: String, private val notes: ArrayList<Note>) : MenuItem {
 
-    fun createNote() {
-        val userInput = UserInput()
-        val noteTitle = userInput.getText("Введите название заметки")
-        val noteText = userInput.getText("Введите текст заметки")
-        notes.add(Note(noteTitle, noteText))
+    fun showNotes() {
+        while (true) {
+            // показывает меню списка заметок
+            val menu = Menu(this.notes.toList(), this)
+            menu.showMenu()
+
+            // и просит пользователя выбрать пункт меню
+            when (val selectedNumber = menu.selectMenu()) {
+                // создание заметки
+                0 -> this.createNote()
+
+                // выход из архива
+                this.notes.size + 1 -> {
+                    println(Texts.ARCHIVE_EXIT.text)
+                    break
+                }
+
+                // показывает выбранную заметку
+                in 1..this.notes.size -> {
+                    // показывает содержимое заметки
+                    showNote(selectedNumber - 1)
+                }
+            }
+        }
     }
 
-    fun showNote(index: Int) {
-        println("---")
-        println("\"${this.notes.get(index).title}\"")
-        println(this.notes.get(index).text)
-        println("---")
+    private fun showNote(index: Int) {
+        println(Texts.BR.text)
+        println(Texts.NOTE.text + " \"${this.notes[index].title}\":")
+        println(this.notes[index].text)
+        println(Texts.BR.text)
+        UserInput().exitNote()
+    }
+
+    private fun createNote() {
+        val userInput = UserInput()
+        val noteTitle = userInput.getText(Texts.NOTE_ENTER_TITLE.text)
+        val noteText = userInput.getText(Texts.NOTE_ENTER_TEXT.text)
+        notes.add(Note(noteTitle, noteText))
+        println(Texts.NOTE_CREATED.text)
     }
 
     override fun getItemTitle(): String {
         return this.title
     }
-
-    override fun createText(): String {
-        return "Создать архив"
-    }
-
 }

@@ -2,28 +2,35 @@ import java.util.Scanner
 
 class UserInput {
 
-    val scanner = Scanner(System.`in`)
+    private val scanner = Scanner(System.`in`)
 
-    // Показываем что нужно ввести и возвращаем ввод пользователя
+    // Показывает что нужно ввести и возвращает ввод пользователя
     fun getText(title: String): String {
-        println("---")
-        println("${title}:")
+        println(title)
         while (true) {
             val consoleData = scanner.nextLine()
             if (consoleData.isNotEmpty()) return consoleData
         }
     }
 
-    // Просим пользователя ввести пункт меню
+    // Просит пользователя ввести пункт меню
     fun selectMenu(): Int {
-        while(true) {
-            println("Введите номер пункта меню:")
+        while (true) {
+            println(Texts.MENU_SELECT.text)
             val number = scanner.nextLine()
             if (isInteger(number)) {
-                return Integer.parseInt(number);
+                return Integer.parseInt(number)
             } else {
-                println("Ошибка ввода, необходимо ввести число");
+                println(Texts.MENU_WRONG_INPUT.text)
             }
+        }
+    }
+
+    fun exitNote() {
+        while (true) {
+            println(Texts.NOTE_ENTER_ANY_TEXT_FOR_EXIT.text)
+            scanner.nextLine()
+            break
         }
     }
 

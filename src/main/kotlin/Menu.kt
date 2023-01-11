@@ -1,34 +1,50 @@
 
-// принимает заголовок для вывода, текст пункта создания и список элементов
-class Menu<T: MenuItem>(private val title: String, private val createText: String, private val listItems: List<T>) {
+// принимает список элементов и выбранный архив в случае если выводит список заметок
+class Menu<T : MenuItem>(private val listItems: List<T>, private val archive: Archive?) {
 
-    // показывает меню (архивов или заметок) и возвращаем выбранный пользователем пункт меню
-    fun showMenu(): Int {
+    // выводит меню (архивов или заметок) и возвращает выбранный пользователем пункт меню
+    fun showMenu() {
 
-        // выводим меню
-        println("---")
-        println(title)
+        println(Texts.BR.text)
 
-
-
-        if (listItems.size>0) {
-            listItems.forEachIndexed { index, t -> println("${index + 1}. ${t.getItemTitle()}") }
-        } else {
-            println("<список пустой>")
+        when (archive) {
+            null -> {
+                println(Texts.ARCHIVE_LIST.text)
+                println("0. " + Texts.ARCHIVE_CREATE.text)
+                if (listItems.isNotEmpty()) {
+                    listItems.forEachIndexed { index, t -> println("${index + 1}. ${t.getItemTitle()}") }
+                } else {
+                    println(Texts.ARCHIVE_LIST_EMPTY.text)
+                }
+                println("${listItems.size + 1}. " + Texts.EXIT.text)
+            }
+            else -> {
+                println(Texts.NOTE_LIST.text + '"' + archive.getItemTitle() + '"')
+                println("0. " + Texts.NOTE_CREATE.text)
+                if (listItems.isNotEmpty()) {
+                    listItems.forEachIndexed { index, t -> println("${index + 1}. ${t.getItemTitle()}") }
+                } else {
+                    println(Texts.NOTE_LIST_EMPTY.text)
+                }
+                println("${listItems.size + 1}. " + Texts.ARCHIVE_EXIT.text)
+            }
         }
-        println("${listItems.size+1}. Выход")
 
-        // просим пользователя ввести номер меню
+        println(Texts.BR.text)
+
+    }
+
+    // просит пользователя ввести номер пункта меню
+    fun selectMenu(): Int {
         while (true) {
             val selectedNumber = UserInput().selectMenu()
-            if (selectedNumber>=0 && selectedNumber<=listItems.size+1) {
+            if (selectedNumber >= 0 && selectedNumber <= listItems.size + 1) {
                 return selectedNumber
             } else {
-                println("Неверно выбран пункт меню, выберете из предложеных");
+                println(Texts.MENU_WRONG_NUMBER.text)
+                println(Texts.BR.text)
             }
         }
     }
-
-
 }
 
