@@ -14,23 +14,22 @@ class UserInput {
     }
 
     // Просит пользователя ввести пункт меню
-    fun selectNumberMenu(showMenuAgain: () -> Unit): Int {
-        while (true) {
-            println(Texts.MENU_SELECT.text)
-            val number = scanner.nextLine()
-            if (isInteger(number)) {
-                return Integer.parseInt(number)
-            } else {
-                println(Texts.MENU_WRONG_INPUT.text)
-                showMenuAgain()
-            }
-        }
+    fun selectNumberMenu(countItems: Int): Int {
+        println(Texts.BR)
+        println(Texts.MENU_SELECT)
+        val inputData = scanner.nextLine()
+        if (isInteger(inputData)) {
+            val index = Integer.parseInt(inputData)
+            if (index in 0..countItems) {
+                return index
+            } else throw Exception(Texts.MENU_WRONG_NUMBER)
+        } else throw Exception(Texts.MENU_WRONG_INPUT)
     }
 
     // просит пользователя нажать Enter для выхода из заметки
     fun exitNote() {
         while (true) {
-            println(Texts.NOTE_ENTER_ANY_TEXT_FOR_EXIT.text)
+            println(Texts.NOTE_ENTER_ANY_TEXT_FOR_EXIT)
             scanner.nextLine()
             break
         }

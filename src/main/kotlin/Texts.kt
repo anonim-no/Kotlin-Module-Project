@@ -1,29 +1,27 @@
-enum class Texts(val text: String) {
+class Texts {
+    companion object {
+        const val MENU_SELECT = "Введите номер пункта меню: "
+        const val MENU_WRONG_INPUT = "ОШИБКА! Необходимо ввести целое число "
+        const val MENU_WRONG_NUMBER = "ОШИБКА! Неверно выбран пункт меню, выберете из предложеных "
 
-    MENU_SELECT("Введите номер пункта меню:"),
-    MENU_WRONG_INPUT("Ошибка ввода, необходимо ввести целое число"),
-    MENU_WRONG_NUMBER("Неверно выбран пункт меню, выберете из предложеных"),
+        const val ARCHIVE_LIST = "Список архивов: "
+        const val ARCHIVE_CREATE = "Создать архив "
+        const val ARCHIVE_CREATED = "Архив создан "
+        const val ARCHIVE_ENTER_TITLE = "Введите название архива: "
+        const val ARCHIVE_EXIT = "Выход из архива "
 
-    ARCHIVE_LIST("Список архивов:"),
-    ARCHIVE_LIST_EMPTY("<архивов нет>"),
-    ARCHIVE_CREATE("Создать архив"),
-    ARCHIVE_CREATED("Архив создан"),
-    ARCHIVE_ENTER_TITLE("Введите название архива:"),
-    ARCHIVE_EXIT("Выход из архива"),
+        const val NOTE = "Заметка "
+        const val NOTE_LIST = "Список заметок архива "
+        const val NOTE_CREATE = "Создать заметку "
+        const val NOTE_CREATED = "Заметка создана "
+        const val NOTE_ENTER_TITLE = "Введите название заметки: "
+        const val NOTE_ENTER_TEXT = "Введите текст заметки: "
+        const val NOTE_ENTER_ANY_TEXT_FOR_EXIT = "Нажмите Enter для выхода в список заметок: "
 
-    NOTE("Заметка"),
-    NOTE_LIST("Список заметок архива "),
-    NOTE_LIST_EMPTY("<заметок нет>"),
-    NOTE_CREATE("Создать заметку"),
-    NOTE_CREATED("Заметка создана"),
-    NOTE_ENTER_TITLE("Введите название заметки:"),
-    NOTE_ENTER_TEXT("Введите текст заметки:"),
-    NOTE_ENTER_ANY_TEXT_FOR_EXIT("Нажмите Enter для выхода в список заметок:"),
+        const val EXIT = "Выход из программы "
 
-    EXIT("Выход из программы"),
+        const val BYE = "Работа завершена "
 
-    BYE("Работа завершена"),
-
-    BR("------------------------------------------------------")
-
+        const val BR = "------------------------------------------------------"
+    }
 }
