@@ -10,24 +10,25 @@ class Archive(private val title: String, private val notes: ArrayList<Note>) : M
 
             // и просит пользователя выбрать пункт меню
             when (val selectedNumber = menu.selectMenu()) {
-                // создание заметки
+                // выбрано создание заметки
                 0 -> this.createNote()
 
-                // выход из архива
-                this.notes.size + 1 -> {
-                    println(Texts.ARCHIVE_EXIT.text)
-                    break
-                }
-
-                // показывает выбранную заметку
+                // выбрана заметка
                 in 1..this.notes.size -> {
                     // показывает содержимое заметки
                     showNote(selectedNumber - 1)
+                }
+
+                // выбран выход из архива
+                this.notes.size + 1 -> {
+                    println(Texts.ARCHIVE_EXIT.text)
+                    break
                 }
             }
         }
     }
 
+    // показывает заметку
     private fun showNote(index: Int) {
         println(Texts.BR.text)
         println(Texts.NOTE.text + " \"${this.notes[index].title}\":")
@@ -36,6 +37,7 @@ class Archive(private val title: String, private val notes: ArrayList<Note>) : M
         UserInput().exitNote()
     }
 
+    // получает заголовок и текст заметки от пользователя и создает заметку
     private fun createNote() {
         val userInput = UserInput()
         val noteTitle = userInput.getText(Texts.NOTE_ENTER_TITLE.text)
@@ -47,4 +49,5 @@ class Archive(private val title: String, private val notes: ArrayList<Note>) : M
     override fun getItemTitle(): String {
         return this.title
     }
+
 }

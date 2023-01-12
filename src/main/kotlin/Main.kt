@@ -11,13 +11,10 @@ class Main {
 
     fun start() {
 
-        // заполняем архивы тестовыми данными
+        // заполнет архивы тестовыми данными
         archives = getTestData()
 
-        showArchives()
-    }
-
-    private fun showArchives() {
+        // показывает меню и просит пользователя сделать выбор
         while (true) {
             // показываем меню списка архивов
             val menu = Menu(archives.toList(), null)
@@ -25,33 +22,34 @@ class Main {
 
             // просим пользователя выбрать пункт меню
             when (val selectedNumber = menu.selectMenu()) {
-                // создание архива
+                // выбрано создание архива
                 0 -> createArchive()
 
-                // выход из программы
-                archives.size + 1 -> {
-                    println(Texts.BYE.text)
-                    break
-                }
-
-                // показываем выбранный архив
+                // выбран архив
                 in 1..archives.size -> {
                     // заметки выбранного архива
                     archives[selectedNumber - 1].showNotes()
+                }
+
+                // выбран выход из программы
+                archives.size + 1 -> {
+                    println(Texts.BYE.text)
+                    break
                 }
             }
         }
     }
 
     private fun createArchive() {
-        // просим у пользователя название архива
+        // просит у пользователя название архива
         val archiveTitle = UserInput().getText(Texts.ARCHIVE_ENTER_TITLE.text)
 
-        // добавляем архив
+        // добавляет архив
         archives.add(Archive(archiveTitle, arrayListOf()))
         println(Texts.ARCHIVE_CREATED.text)
     }
 
+    // заполняет архивы тестовыми данными
     private fun getTestData(): ArrayList<Archive> {
 
         val archives: ArrayList<Archive> = arrayListOf()

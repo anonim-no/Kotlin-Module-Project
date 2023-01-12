@@ -14,7 +14,7 @@ class UserInput {
     }
 
     // Просит пользователя ввести пункт меню
-    fun selectMenu(): Int {
+    fun selectNumberMenu(showMenuAgain: () -> Unit): Int {
         while (true) {
             println(Texts.MENU_SELECT.text)
             val number = scanner.nextLine()
@@ -22,10 +22,12 @@ class UserInput {
                 return Integer.parseInt(number)
             } else {
                 println(Texts.MENU_WRONG_INPUT.text)
+                showMenuAgain()
             }
         }
     }
 
+    // просит пользователя нажать Enter для выхода из заметки
     fun exitNote() {
         while (true) {
             println(Texts.NOTE_ENTER_ANY_TEXT_FOR_EXIT.text)
