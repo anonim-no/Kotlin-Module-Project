@@ -4,6 +4,33 @@ class Work {
 
     fun start() {
 
+        // создаем меню
+        createMenu()
+
+        // основное тело
+        while (true) {
+            // вывод начального меню на экран
+            showMenuItems(Texts.ARCHIVE_LIST, Texts.EXIT, menuList)
+            try {
+                // просим пользователя выбрать пункт меню
+                val indexMenu = UserInput().selectNumberMenu(menuList.size)
+
+                // выход из программы
+                if (indexMenu == menuList.size) {
+                    println(Texts.BYE)
+                    break
+                }
+
+                // вызываем обработчик для пункта меню архивов
+                menuList[indexMenu].handler()
+
+            } catch (e: Exception) {
+                println(e.message)
+            }
+        }
+    }
+
+    private fun createMenu() {
         // создаем меню архивов
         menuList.add(Menu(Texts.ARCHIVE_CREATE) {
 
@@ -58,27 +85,6 @@ class Work {
 
             println(Texts.ARCHIVE_CREATED)
         })
-
-        while (true) {
-            // вывод начального меню на экран
-            showMenuItems(Texts.ARCHIVE_LIST, Texts.EXIT, menuList)
-            try {
-                // просим пользователя выбрать пункт меню
-                val indexMenu = UserInput().selectNumberMenu(menuList.size)
-
-                // выход из программы
-                if (indexMenu == menuList.size) {
-                    println(Texts.BYE)
-                    break
-                }
-
-                // вызываем обработчик для пункта меню архивов
-                menuList[indexMenu].handler()
-
-            } catch (e: Exception) {
-                println(e.message)
-            }
-        }
     }
 
     private fun showMenuItems(title: String, exit: String, list: List<Menu>) {
