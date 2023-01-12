@@ -53,9 +53,9 @@ class Main {
     private fun getTestData(): ArrayList<Archive> {
 
         val archives: ArrayList<Archive> = arrayListOf()
-        for (i in 1..(2..8).random()) {
+        for (i in 1..(2..5).random()) {
             val listNotesArchive: ArrayList<Note> = arrayListOf()
-            for (n in 1..(2..8).random()) {
+            for (n in 1..(2..5).random()) {
                 listNotesArchive.add(
                     Note("Тестовая заметка $n", "Текст тестовой заметки $n")
                 )
