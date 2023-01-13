@@ -11,11 +11,12 @@ class Work {
         while (true) {
             // вывод начального меню на экран
             showMenuItems(Texts.ARCHIVE_LIST, Texts.EXIT, menuList)
+
             try {
                 // просим пользователя выбрать пункт меню
                 val indexMenu = UserInput().selectNumberMenu(menuList.size)
 
-                // выход из программы
+                // пользователь выбрал последний пункт - выход из программы
                 if (indexMenu == menuList.size) {
                     println(Texts.BYE)
                     break
@@ -25,6 +26,7 @@ class Work {
                 menuList[indexMenu].handler()
 
             } catch (e: Exception) {
+                // показываем ошибки выбора пункта меню
                 println(e.message)
             }
         }
@@ -32,37 +34,46 @@ class Work {
 
     private fun createMenu() {
         // создаем меню архивов
-        menuList.add(Menu(Texts.ARCHIVE_CREATE) {
+        // изначально состоит из двух пунктов 1. создать архив и выход
 
-            // создание архива
+        // пункт создания архива
+        menuList.add(Menu(Texts.ARCHIVE_CREATE) {
+            // вызывает функцию создания архива
+            // запрашиваем имя
             val archiveName = UserInput().getText(Texts.ARCHIVE_ENTER_TITLE)
             val archiveScreen = Archive(archiveName)
 
-            // создаем меню заметок
+            // архив изначально содержит в себе пункт создания заметки и выход
+            // пункт создания заметки
             val archiveScreenItems = Menu(Texts.NOTE_CREATE) {
-
-                // создание заметки
+                // вызываем функцию создания заметки
+                // запрашиваем название и текст
                 val userInput = UserInput()
                 val noteTitle = userInput.getText(Texts.NOTE_ENTER_TITLE)
                 val noteText = userInput.getText(Texts.NOTE_ENTER_TEXT)
                 val note = Note(noteTitle, noteText)
                 println(Texts.NOTE_CREATED)
 
-                // просмтор заметки
+                // заметка вызывает функцию просмтора заметки
                 note.handler = {
                     println(Texts.BR)
                     println(Texts.NOTE + " \"${note.title}\":")
                     println(note.text)
                     println(Texts.BR)
+                    // просим нажать Enter для выхода
                     UserInput().exitNote()
+                    // показываем меню текущего архива
                     archiveScreen.handler()
                 }
 
-                // добавляем заметку в меню
+                // добавляем заметку в меню архива
                 archiveScreen.subMenu.add(note)
+
+                // показываем меню текущего архива
                 archiveScreen.handler()
             }
 
+            // добавляем архив
             archiveScreen.subMenu.add(archiveScreenItems)
 
             // обработчик для пункта архив
@@ -70,23 +81,29 @@ class Work {
 
                 // показываем пункты меню архива
                 showMenuItems("${Texts.NOTE_LIST} \"${archiveScreen.title}\"", Texts.ARCHIVE_EXIT, archiveScreen.subMenu)
+
                 try {
+                    // ожидаем выбор пользователя
                     val indexMenu = UserInput().selectNumberMenu(archiveScreen.subMenu.size)
                     if (indexMenu != archiveScreen.subMenu.size) {
+                        // вызываем обработчик для пункта меню
                         archiveScreen.subMenu[indexMenu].handler()
                     }
                 } catch (e: Exception) {
+                    // показываем ошибки выбора пункта меню
                     println(e.message)
+                    // показываем меню текущего архива
                     archiveScreen.handler()
                 }
             }
 
+            // добавляем созданный архив
             menuList.add(menuList.size, archiveScreen)
-
             println(Texts.ARCHIVE_CREATED)
         })
     }
 
+    // показывает название, пункты меню и добавляет пункт выхода
     private fun showMenuItems(title: String, exit: String, list: List<Menu>) {
         println(Texts.BR)
         println(title)
