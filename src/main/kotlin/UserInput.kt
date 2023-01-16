@@ -28,11 +28,9 @@ class UserInput {
 
     // просит пользователя нажать Enter для выхода из заметки
     fun exitNote() {
-        while (true) {
-            println(Texts.NOTE_ENTER_ANY_TEXT_FOR_EXIT)
-            scanner.nextLine()
-            break
-        }
+
+        println(Texts.NOTE_ENTER_ANY_TEXT_FOR_EXIT)
+        scanner.nextLine()
     }
 
     // проверка что строка число :)

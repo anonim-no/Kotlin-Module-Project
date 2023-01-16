@@ -1,6 +1,6 @@
 class Work {
 
-    val menuList = mutableListOf<Menu>()
+    private val menuList = mutableListOf<Menu>()
 
     fun start() {
 
